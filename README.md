@@ -5,8 +5,10 @@ baseline.js file has the solution with no optimization whatsoever
 
 optimized.js has all the goodies
 
-### To run this script, type:
+### To run scripts, type:
 
->`node baseline "100"`
+>`node [file] "100"`
 
->`node baseline "10^6"`
+>`node [file] "10^6"`
+
+where [file] is either baseline.js or optimized.js
