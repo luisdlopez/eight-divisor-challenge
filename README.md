@@ -1,10 +1,12 @@
 # eight-divisor-challenge
 Solution for https://projecteuler.net/problem=501 - Eight Divisors
 
-At the moment, there's only one file - baseline.js - which represents the basic solution to this problem, with no code optimization.
+baseline.js file has the solution with no optimization whatsoever
+
+optimized.js has all the goodies
 
 ### To run this script, type:
 
->`node unoptimized "100"`
+>`node baseline "100"`
 
->`node unoptimized "10^6"`
+>`node baseline "10^6"`
