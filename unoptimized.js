@@ -1,43 +1,59 @@
 var arguments = process.argv;
 
-var argument = arguments[2];
+var input = arguments[2]; // "number" | "number^exponent"
+var number = getNumberFromInput(input);
 
-if(argumentIsNull(argument)) {
-    console.error('Invalid number - Exiting program...');
-    process.exit(1);
+if (!input || !number) {
+    displayErrorMessageAndExit('Invalid number - Exiting program...');
 }
 
-var number;
+run();
 
-if(argumentHasExponent(argument)) {
-    // TODO: more functions!
-    number = argument.split('^');
-    number = Math.pow(number[0], number[1]);
-} else {
-    number = argument;
-}
+function getNumberFromInput(input) {
+    var number = null;
 
-var numbersDividedBy8 = 0;
-
-for (var counter = 1; counter <= number; counter++) {
-    if (listDivisors(counter).length === 8) {
-        numbersDividedBy8++;
+    if (inputHasExponent(input)) {
+        var splitInput = input.split('^');
+        if (isNumber(splitInput[0]) && isNumber(splitInput[1])) {
+            number = Math.pow(splitInput[0], splitInput[1]);
+        }
+    } else {
+        if (isNumber(input)) {
+            number = input;
+        }
     }
+
+    return number;
 }
 
-console.log(numbersDividedBy8);
-process.exit(1);
-
-function argumentIsNull(number) {
-    return !number;
-}
-
-function argumentHasExponent(number) {
+function inputHasExponent(number) {
     return number.indexOf('^') !== -1;
 }
 
 function isNumber(number) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
+    return !isNaN(parseFloat(number)) && isFinite(number);
+}
+
+function displayErrorMessageAndExit(message) {
+    console.error(message);
+    process.exit(1);
+}
+
+function run() {
+    var numbersDividedBy8 = 0;
+    var start = new Date();
+
+    for (var counter = 1; counter <= number; counter++) {
+        if (listDivisors(counter).length === 8) {
+            numbersDividedBy8++;
+        }
+    }
+
+    var totalTime = (new Date()) - start;
+
+    console.log(numbersDividedBy8);
+    console.log('Total time: %dms', totalTime);
+    process.exit(1);
 }
 
 function listDivisors(number) {
