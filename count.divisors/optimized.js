@@ -2,9 +2,9 @@
 // square root test moved outside of loop, tested only once (on last iteration number)
 // about one second saved (for now)
 function countDivisors(number) {
-    var count = 0,
-        end = Math.floor(Math.sqrt(number)),
-        i;
+    var count = 0;
+    var end = Math.floor(Math.sqrt(number));
+    var i;
 
     for (i = 1; i < end; i++) {
         if (number % i == 0) {
@@ -22,6 +22,16 @@ function countDivisors(number) {
     return count;
 }
 
-module.exports = {
-    getDivisors: countDivisors
-};
+(function run() {
+    var start = parseFloat(process.argv[2]);
+    var end = parseFloat(process.argv[3]);
+    var numbersDividedBy8 = 0;
+
+    for (var counter = start; counter <= end; counter++) {
+        if (countDivisors(counter) === 8) {
+            numbersDividedBy8++;
+        }
+    }
+
+    return process.send(numbersDividedBy8);
+})();
