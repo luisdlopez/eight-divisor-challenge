@@ -3,15 +3,17 @@
 ## Installation
 
 ```bash
-sudo npm install -g luisdlopez/eight-divisor-challenge
+sudo npm install luisdlopez/eight-divisor-challenge
 ```
 
 ## Usage
 
+Go to installation folder:
+
 ```bash
-eight-divisor-challenge 1000000
+node index 1000000
 ```
 
 ```bash
-eight-divisor-challenge "10^6"
+node index "10^6"
 ```
