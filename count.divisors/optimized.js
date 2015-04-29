@@ -33,5 +33,6 @@ function countDivisors(number) {
         }
     }
 
-    return process.send(numbersDividedBy8);
+    process.send(numbersDividedBy8);
+    process.exit(1);
 })();

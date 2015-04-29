@@ -11,7 +11,6 @@ function run(number) {
 
     var fork = require('child_process').fork;
     var cpus = parseFloat(require('os').cpus().length) - 1;
-    var childProcesses = [];
 
     var loops = parseInt (number / cpus);
     var start;
@@ -30,23 +29,19 @@ function run(number) {
 
         var childProcess = fork(__dirname + '/count.divisors/optimized', [start, end]);
 
-        childProcesses.push(childProcess);
-
         childProcess.on('message', function (count) {
 
             numbersDividedBy8 += parseFloat(count);
 
-            childProcesses.pop();
-
-            if (childProcesses.length === 0) {
-
-                var time = (new Date()) - startTime;
-                console.log('Numbers divided by 8: ' + numbersDividedBy8);
-                console.log('Total time: %dms', time);
-
-            }
-
         });
 
     }
+
+    // display final message when main process ends
+    process.on('exit', function () {
+        var time = (new Date()) - startTime;
+        console.log('Numbers divided by 8: ' + numbersDividedBy8);
+        console.log('Total time: %dms', time);
+    });
+
 }
