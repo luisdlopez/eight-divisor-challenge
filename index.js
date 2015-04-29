@@ -1,11 +1,14 @@
 var inputValidation = require('./lib/inputValidation');
+var scheduler = require('./lib/scheduler');
 
 var arguments = process.argv;
 var number = inputValidation.getNumberFromInput(arguments);
 
-run(number);
+scheduler.calculateJobs(number);
 
-function run(number) {
+// run(number);
+
+/*function run(number) {
 
     var numbersDividedBy8 = 0;
 
@@ -44,4 +47,4 @@ function run(number) {
         console.log('Total time: %dms', time);
     });
 
-}
+}*/
