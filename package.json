@@ -5,6 +5,10 @@
   "version": "1.0.0",
   "homepage": "https://github.com/luisdlopez/eight-divisors-challenge",
   "private": true,
+  "main": "index.js",
+  "bin": {
+    "eight-divisor-challenge": "index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/luisdlopez/eight-divisors-challenge"

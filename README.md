@@ -1,14 +1,17 @@
-# eight-divisor-challenge
-Solution for https://projecteuler.net/problem=501 - Eight Divisors
+# Eight Divisor Challenge
 
-baseline.js file has the solution with no optimization whatsoever
+## Installation
 
-optimized.js has all the goodies
+```bash
+sudo npm install -g luisdlopez/eight-divisor-challenge
+```
 
-### To run scripts, type:
+## Usage
 
->`node [file] "100"`
+```bash
+eight-divisor-challenge 1000000
+```
 
->`node [file] "10^6"`
-
-where [file] is either baseline.js or optimized.js
+```bash
+eight-divisor-challenge "10^6"
+```
