@@ -6,38 +6,39 @@ var number = inputValidation.getNumberFromInput(arguments);
 
 scheduler.calculateJobs(number);
 
-// run(number);
+run(number);
 
-/*function run(number) {
+function run(number) {
 
     var numbersDividedBy8 = 0;
-
     var fork = require('child_process').fork;
     var cpus = parseFloat(require('os').cpus().length) - 1;
-
-    var loops = parseInt (number / cpus);
-    var start;
-    var end;
-
+    var job, start, end;
+    scheduler.calculateJobs(number);
     var startTime = new Date();
 
-    for (var i = 0; i < cpus; i++) {
-        start = i * loops;
-        end = ((i + 1) * loops) - 1;
+    function test(job) {
 
-        // add remaining numbers to last loop
-        if (i === (cpus  - 1)) {
-            end += (number - end);
+        if (job) {
+
+            var childProcess = fork(__dirname + '/count.divisors/optimized', [job.start, job.end]);
+
+            childProcess.on('message', function (count) {
+                numbersDividedBy8 += parseFloat(count);
+            });
+
+            childProcess.on('exit', function() {
+                job = scheduler.getNextJob();
+                test(job);
+            });
+
         }
 
-        var childProcess = fork(__dirname + '/count.divisors/optimized', [start, end]);
+    }
 
-        childProcess.on('message', function (count) {
-
-            numbersDividedBy8 += parseFloat(count);
-
-        });
-
+    for (var i = 0; i < cpus; i++) {
+        job = scheduler.getNextJob();
+        test(job);
     }
 
     // display final message when main process ends
@@ -47,4 +48,4 @@ scheduler.calculateJobs(number);
         console.log('Total time: %dms', time);
     });
 
-}*/
+}
