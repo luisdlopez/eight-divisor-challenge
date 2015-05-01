@@ -4,37 +4,19 @@ var scheduler = require('./lib/scheduler');
 var arguments = process.argv;
 var number = inputValidation.getNumberFromInput(arguments);
 
-run(number);
+var fork = require('child_process').fork;
+var numbersDividedBy8 = 0;
+scheduler.calculateJobs(number);
 
-function run(number) {
+run();
 
-    var numbersDividedBy8 = 0;
-    var fork = require('child_process').fork;
+function run() {
+
     var cpus = parseFloat(require('os').cpus().length);
-    scheduler.calculateJobs(number);
     var startTime = new Date();
 
-    function test(job) {
-
-        if (job) {
-
-            var childProcess = fork(__dirname + '/count.divisors/optimized', [job.start, job.end]);
-
-            childProcess.on('message', function (count) {
-                numbersDividedBy8 += parseFloat(count);
-            });
-
-            childProcess.on('exit', function() {
-                job = scheduler.getNextJob();
-                test(job);
-            });
-
-        }
-
-    }
-
     for (var i = 0; i < cpus; i++) {
-        test(scheduler.getNextJob());
+        scheduleJob(scheduler.getNextJob());
     }
 
     // display final message when main process ends
@@ -43,5 +25,23 @@ function run(number) {
         console.log('Numbers divided by 8: ' + numbersDividedBy8);
         console.log('Total time: %dms', time);
     });
+
+}
+
+function scheduleJob(job) {
+
+    if (job) {
+
+        var childProcess = fork(__dirname + '/count.divisors/optimized', [job.start, job.end]);
+
+        childProcess.on('message', function (count) {
+            numbersDividedBy8 += parseFloat(count);
+        });
+
+        childProcess.on('exit', function() {
+            scheduleJob(scheduler.getNextJob());
+        });
+
+    }
 
 }
