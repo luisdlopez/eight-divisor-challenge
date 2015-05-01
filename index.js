@@ -37,39 +37,6 @@ function run(number) {
         test(scheduler.getNextJob());
     }
 
-    /*var job;
-    while (job = scheduler.getNextJob()) {
-        (function() {
-            function countDivisors(number) {
-                var count = 2;
-                var end = Math.floor(Math.sqrt(number));
-                var i;
-
-                for (i = 2; i < end; i++) {
-                    if (number % i == 0) {
-                        count += 2;
-                    }
-                }
-
-                if (number % i == 0) {
-                    count += 2;
-                    if (i * i == number) { // Don't include a square root twice
-                        count--;
-                    }
-                }
-
-                return count;
-            }
-
-            for (var counter = job.start; counter <= job.end; counter++) {
-                if (countDivisors(counter) === 8) {
-                    numbersDividedBy8++;
-                }
-            }
-
-        })();
-    }*/
-
     // display final message when main process ends
     process.on('exit', function () {
         var time = (new Date()) - startTime;
