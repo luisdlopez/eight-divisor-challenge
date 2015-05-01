@@ -2,11 +2,11 @@
 // square root test moved outside of loop, tested only once (on last iteration number)
 // about one second saved (for now)
 function countDivisors(number) {
-    var count = 0;
+    var count = 2;
     var end = Math.floor(Math.sqrt(number));
     var i;
 
-    for (i = 1; i < end; i++) {
+    for (i = 2; i < end; i++) {
         if (number % i == 0) {
             count += 2;
         }

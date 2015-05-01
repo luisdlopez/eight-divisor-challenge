@@ -4,8 +4,6 @@ var scheduler = require('./lib/scheduler');
 var arguments = process.argv;
 var number = inputValidation.getNumberFromInput(arguments);
 
-scheduler.calculateJobs(number);
-
 run(number);
 
 function run(number) {
@@ -20,7 +18,6 @@ function run(number) {
     function test(job) {
 
         if (job) {
-
             var childProcess = fork(__dirname + '/count.divisors/optimized', [job.start, job.end]);
 
             childProcess.on('message', function (count) {
