@@ -18,6 +18,7 @@ function run(number) {
     function test(job) {
 
         if (job) {
+
             var childProcess = fork(__dirname + '/count.divisors/optimized', [job.start, job.end]);
 
             childProcess.on('message', function (count) {
