@@ -10,8 +10,7 @@ function run(number) {
 
     var numbersDividedBy8 = 0;
     var fork = require('child_process').fork;
-    var cpus = parseFloat(require('os').cpus().length) - 1;
-    var job, start, end;
+    var cpus = parseFloat(require('os').cpus().length);
     scheduler.calculateJobs(number);
     var startTime = new Date();
 
@@ -35,9 +34,41 @@ function run(number) {
     }
 
     for (var i = 0; i < cpus; i++) {
-        job = scheduler.getNextJob();
-        test(job);
+        test(scheduler.getNextJob());
     }
+
+    /*var job;
+    while (job = scheduler.getNextJob()) {
+        (function() {
+            function countDivisors(number) {
+                var count = 2;
+                var end = Math.floor(Math.sqrt(number));
+                var i;
+
+                for (i = 2; i < end; i++) {
+                    if (number % i == 0) {
+                        count += 2;
+                    }
+                }
+
+                if (number % i == 0) {
+                    count += 2;
+                    if (i * i == number) { // Don't include a square root twice
+                        count--;
+                    }
+                }
+
+                return count;
+            }
+
+            for (var counter = job.start; counter <= job.end; counter++) {
+                if (countDivisors(counter) === 8) {
+                    numbersDividedBy8++;
+                }
+            }
+
+        })();
+    }*/
 
     // display final message when main process ends
     process.on('exit', function () {
