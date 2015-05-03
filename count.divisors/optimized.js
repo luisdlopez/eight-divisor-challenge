@@ -1,38 +1,63 @@
-// no longer dealing with arrays
-// square root test moved outside of loop, tested only once (on last iteration number)
-// about one second saved (for now)
-function countDivisors(number) {
-    var count = 2;
-    var end = Math.floor(Math.sqrt(number));
-    var i;
+var PRIME_NUMBERS = require('../ressources/prime.numbers');
 
-    for (i = 2; i < end; i++) {
-        if (number % i == 0) {
-            count += 2;
+function countDivisors(number) {
+
+    var countMap = {};
+    var primePosition = 0;
+    var remains = number;
+    var primeNumbers = PRIME_NUMBERS.getPrimeNumbers();
+    var prime = primeNumbers[primePosition];
+    var divisorLimit = Math.floor(Math.sqrt(number));
+
+    while (remains > 1) {
+
+        if (remains % prime === 0) {
+
+            remains /= prime;
+            countMap[prime] = countMap[prime] ? countMap[prime] + 1 : 1 ;
+
+        } else if (prime >= divisorLimit) {
+
+            countMap[number] = 1 ;
+            break;
+
+        } else {
+
+            prime = primeNumbers[++primePosition];
+
         }
+
     }
 
-    if (number % i == 0) {
-        count += 2;
-        if (i * i == number) { // Don't include a square root twice
-            count--;
-        }
+    var count = 1;
+
+    for (var prime in countMap) {
+
+        count *= ( countMap[prime] + 1 );
+
     }
 
     return count;
+
 }
 
 (function run() {
+
     var start = parseFloat(process.argv[2]);
     var end = parseFloat(process.argv[3]);
     var numbersDividedBy8 = 0;
 
     for (var counter = start; counter <= end; counter++) {
+
         if (countDivisors(counter) === 8) {
+
             numbersDividedBy8++;
+
         }
+
     }
 
     process.send(numbersDividedBy8);
     process.exit(1);
+
 })();
