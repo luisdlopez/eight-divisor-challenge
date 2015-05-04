@@ -2,62 +2,62 @@ var PRIME_NUMBERS = require('../ressources/prime.numbers');
 
 function countDivisors(number) {
 
-    var countMap = {};
-    var primePosition = 0;
-    var remains = number;
-    var primeNumbers = PRIME_NUMBERS.getPrimeNumbers();
-    var prime = primeNumbers[primePosition];
-    var divisorLimit = Math.floor(Math.sqrt(number));
+  var countMap = {};
+  var primePosition = 0;
+  var remains = number;
+  var primeNumbers = PRIME_NUMBERS.getPrimeNumbers();
+  var prime = primeNumbers[primePosition];
+  var divisorLimit = Math.floor(Math.sqrt(number));
 
-    while (remains > 1) {
+  while (remains > 1) {
 
-        if (remains % prime === 0) {
+    if (remains % prime === 0) {
 
-            remains /= prime;
-            countMap[prime] = countMap[prime] ? countMap[prime] + 1 : 1 ;
+      remains /= prime;
+      countMap[prime] = countMap[prime] ? countMap[prime] + 1 : 1;
 
-        } else if (prime >= divisorLimit) {
+    } else if (prime >= divisorLimit) {
 
-            countMap[number] = 1 ;
-            break;
+      countMap[number] = 1;
+      break;
 
-        } else {
+    } else {
 
-            prime = primeNumbers[++primePosition];
-
-        }
+      prime = primeNumbers[++primePosition];
 
     }
 
-    var count = 1;
+  }
 
-    for (var prime in countMap) {
+  var count = 1;
 
-        count *= ( countMap[prime] + 1 );
+  for (var prime in countMap) {
 
-    }
+    count *= (countMap[prime] + 1);
 
-    return count;
+  }
+
+  return count;
 
 }
 
 (function run() {
 
-    var start = parseFloat(process.argv[2]);
-    var end = parseFloat(process.argv[3]);
-    var numbersDividedBy8 = 0;
+  var start = parseFloat(process.argv[2]);
+  var end = parseFloat(process.argv[3]);
+  var numbersDividedBy8 = 0;
 
-    for (var counter = start; counter <= end; counter++) {
+  for (var counter = start; counter <= end; counter++) {
 
-        if (countDivisors(counter) === 8) {
+    if (countDivisors(counter) === 8) {
 
-            numbersDividedBy8++;
-
-        }
+      numbersDividedBy8++;
 
     }
 
-    process.send(numbersDividedBy8);
-    process.exit(1);
+  }
+
+  process.send(numbersDividedBy8);
+  process.exit(1);
 
 })();
