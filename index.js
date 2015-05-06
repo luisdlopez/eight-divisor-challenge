@@ -1,4 +1,4 @@
-var inputValidation = require('./lib/inputValidation');
+var inputValidation = require('./lib/input.validation');
 var scheduler = require('./lib/scheduler');
 
 var arguments = process.argv;
