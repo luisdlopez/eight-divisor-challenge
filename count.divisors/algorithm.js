@@ -2,7 +2,8 @@ var PRIME_NUMBERS = require('../ressources/prime.numbers');
 
 function countDivisors(number) {
 
-  var countMap = {};
+  var countMap = [];
+  var countMapCounter = 0;
   var primePosition = 0;
   var remains = number;
   var primeNumbers = PRIME_NUMBERS.getPrimeNumbers();
@@ -14,16 +15,18 @@ function countDivisors(number) {
     if (remains % prime === 0) {
 
       remains /= prime;
-      countMap[prime] = countMap[prime] ? countMap[prime] + 1 : 1;
+      countMap[countMapCounter] = countMap[countMapCounter] ? countMap[countMapCounter] + 1 : 1;
 
     } else if (prime >= divisorLimit) {
 
-      countMap[number] = 1;
+      countMapCounter++;
+      countMap[countMapCounter] = 1;
       break;
 
     } else {
 
       prime = primeNumbers[++primePosition];
+      countMapCounter++;
 
     }
 
