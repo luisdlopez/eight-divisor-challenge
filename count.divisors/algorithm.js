@@ -29,6 +29,12 @@ function countDivisors(number) {
 
   }
 
+  return multiplyExponents(countMap);
+
+}
+
+function multiplyExponents(countMap) {
+
   var count = 1;
 
   for (var prime in countMap) {
